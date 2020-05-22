@@ -87,7 +87,7 @@ namespace DPLib
         }
         
     }
-
+    
     public class AppComponent : Attribute { }
 
     public class Inject : Attribute { }
