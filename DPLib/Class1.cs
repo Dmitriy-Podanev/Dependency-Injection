@@ -32,14 +32,9 @@ namespace DPLib
                 var attributes = typ.GetCustomAttributes(typeof(AppComponent), false);
                 if (attributes.Length == 0)
                     continue;
-               
                 instancesObjects.Add(typ,Activator.CreateInstance(typ));
             }
         }
-
-
-
-
 
         public T GetComponent<T>() 
         {
@@ -52,7 +47,6 @@ namespace DPLib
                     break;
                 }
 
-
             }
 
 
@@ -62,23 +56,12 @@ namespace DPLib
 
                 if (attributes.Length == 0)
                     continue;
-              // var asd= field.ReflectedType;
-              // var asas = instancesObjects[typeof(DataProvider)];
+              
                 foreach (var instancesObject in instancesObjects)
                 {
-                    var azz = instancesObjects[typeof(T)];
-                   // field.SetValue(instancesObject.Value, instancesObject.Value);
-                  // var ccc= field.ReflectedType.GetType();
-                  // var asdasd = field.FieldType;
-                  var asdasd = field.ReflectedType;
-                 // var pd = field.GetValue(typeof(DataService));
                     if (field.FieldType == instancesObject.Key)
                     {
-                      field.SetValue(azz, instancesObject.Value);//TODO должна передать поле instance
-                      //Console.WriteLine("Задал поле");
-                      
-                       
-
+                      field.SetValue(instancesObjects[typeof(T)], instancesObject.Value);
                     }
                 }
 
@@ -95,14 +78,11 @@ namespace DPLib
     [AppComponent]
     public class DataService
     {
-        [Inject] public DataProvider _dataProvider; //get//TODO присвоить сслыкам занчение активатора из context
-        [Inject] public WebProvider _webProvider; //get
+        [Inject] public DataProvider _dataProvider; 
+        [Inject] public WebProvider _webProvider; 
 
-        public void ProcessData(string str)
+        public void ProcessData(string str)// TODO Убирать ли parameters??? Нужно,чтобы возвращал только время без даты
         {
-            
-          
-            
             string data = _dataProvider.GetData().ToString();
             data = (data + " " +str).ToUpper();
             _webProvider.SendData(data);
