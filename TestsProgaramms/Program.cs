@@ -13,9 +13,10 @@ namespace TestsProgaramms
         {
             ObjectContext context = new ObjectContext();
 
-            Console.WriteLine("****************");
+            Console.WriteLine("*********************\n");
             DataService dataService = context.GetComponent<DataService>();
-            dataService.ProcessData("Привет");
+            dataService.ProcessData();
+            Console.WriteLine("\n*********************");
 
 
 

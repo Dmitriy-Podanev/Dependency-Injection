@@ -81,10 +81,9 @@ namespace DPLib
         [Inject] public DataProvider _dataProvider;
         [Inject] public WebProvider _webProvider;
 
-        public void ProcessData(string str)// TODO Убирать ли parameters??? Нужно,чтобы возвращал только время без даты
+        public void ProcessData()
         {
-            string data = _dataProvider.GetData().ToString();
-            data = (data + " " + str).ToUpper();
+            string data = _dataProvider.GetData().ToString(CultureInfo.InvariantCulture);
             _webProvider.SendData(data);
         }
 
