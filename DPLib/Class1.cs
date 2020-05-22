@@ -20,8 +20,8 @@ namespace DPLib
 
     public class ObjectContext
     {
-     
-        private  Dictionary<Type, object> instancesObjects = new Dictionary<Type, object>();
+
+        private Dictionary<Type, object> instancesObjects = new Dictionary<Type, object>();
         public ObjectContext()
         {
 
@@ -32,16 +32,16 @@ namespace DPLib
                 var attributes = typ.GetCustomAttributes(typeof(AppComponent), false);
                 if (attributes.Length == 0)
                     continue;
-                instancesObjects.Add(typ,Activator.CreateInstance(typ));
+                instancesObjects.Add(typ, Activator.CreateInstance(typ));
             }
         }
 
-        public T GetComponent<T>() 
+        public T GetComponent<T>()
         {
-            var temp= default(object);
+            var temp = default(object);
             foreach (var service in instancesObjects)
             {
-                if (service.Key==typeof(T))
+                if (service.Key == typeof(T))
                 {
                     temp = service.Value;
                     break;
@@ -56,21 +56,21 @@ namespace DPLib
 
                 if (attributes.Length == 0)
                     continue;
-              
+
                 foreach (var instancesObject in instancesObjects)
                 {
                     if (field.FieldType == instancesObject.Key)
                     {
-                      field.SetValue(instancesObjects[typeof(T)], instancesObject.Value);
+                        field.SetValue(instancesObjects[typeof(T)], instancesObject.Value);
                     }
                 }
 
             }
             return (T)temp;
         }
-        
+
     }
-    
+
     public class AppComponent : Attribute { }
 
     public class Inject : Attribute { }
@@ -78,13 +78,13 @@ namespace DPLib
     [AppComponent]
     public class DataService
     {
-        [Inject] public DataProvider _dataProvider; 
-        [Inject] public WebProvider _webProvider; 
+        [Inject] public DataProvider _dataProvider;
+        [Inject] public WebProvider _webProvider;
 
         public void ProcessData(string str)// TODO Убирать ли parameters??? Нужно,чтобы возвращал только время без даты
         {
             string data = _dataProvider.GetData().ToString();
-            data = (data + " " +str).ToUpper();
+            data = (data + " " + str).ToUpper();
             _webProvider.SendData(data);
         }
 
@@ -104,11 +104,11 @@ namespace DPLib
     [AppComponent]
     public class WebProvider// Должен выводить Полученное время в Консоль 
     {
-        
+
         public void SendData(string data)
         {
             Console.WriteLine(data);
-            
+
         }
     }
 

@@ -12,16 +12,11 @@ namespace TestsProgaramms
         static void Main(string[] args)
         {
             ObjectContext context = new ObjectContext();
-           
+
             Console.WriteLine("****************");
+            DataService dataService = context.GetComponent<DataService>();
+            dataService.ProcessData("Привет");
 
-           
-
-           
-           
-              DataService dataService = context.GetComponent<DataService>();
-              dataService.ProcessData("Привет");
-            
 
 
 
