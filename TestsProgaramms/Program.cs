@@ -15,15 +15,8 @@ namespace TestsProgaramms
 
             Console.WriteLine("*********************\n");
             DataService dataService = context.GetComponent<DataService>();
-            dataService.ProcessData();
+            dataService.ProcessData("TEST");
             Console.WriteLine("\n*********************");
-
-
-
-
-
-
-
 
         }
     }

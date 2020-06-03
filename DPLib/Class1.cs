@@ -1,14 +1,8 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
+
 
 namespace DPLib
 {
@@ -37,7 +31,7 @@ namespace DPLib
         }
 
         public T GetComponent<T>()
-        {
+        {   
             var temp = default(object);
             foreach (var service in instancesObjects)
             {
@@ -81,32 +75,42 @@ namespace DPLib
         [Inject] public DataProvider _dataProvider;
         [Inject] public WebProvider _webProvider;
 
-        public void ProcessData()
+        public string ProcessData(string s)
         {
-            string data = _dataProvider.GetData().ToString(CultureInfo.InvariantCulture);
-            _webProvider.SendData(data);
+            if (s!=null && s.GetType() == typeof(string))
+            {
+                string data = _dataProvider.GetData().ToString(CultureInfo.InvariantCulture);
+                data = data + " " + s;
+               return _webProvider.SendData(data);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+           
         }
 
 
     }
 
     [AppComponent]
-    public class DataProvider // Возвращает время
+    public class DataProvider
     {
-        public DateTime GetData()
+        public string GetData()
         {
 
-            return DateTime.Now;
+            return "SAMPLE DATA";
         }
     }
 
     [AppComponent]
-    public class WebProvider// Должен выводить Полученное время в Консоль 
+    public class WebProvider
     {
 
-        public void SendData(string data)
+        public string SendData(string data)
         {
             Console.WriteLine(data);
+            return data; 
 
         }
     }
